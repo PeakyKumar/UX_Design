@@ -1,0 +1,492 @@
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--w:#FAF7F2;--cream:#F0E8DC;--card:#E6DDD0;--brl:#C4956A;--br:#A07855;--brd:#6B4E37;--gr:#7A9176;--grl:#EAF0E8;--am:#C9A84C;--aml:#F7F0DE;--tx:#2C1F14;--tx2:#7A6558;--tx3:#B5A596;--bord:rgba(160,120,85,0.16)}
+.wrap{display:flex;justify-content:center;padding:24px 12px 40px;background:transparent}
+.phone{width:340px;height:720px;background:var(--w);border-radius:36px;border:1.5px solid rgba(160,120,85,0.3);overflow:hidden;display:flex;flex-direction:column;position:relative;font-family:system-ui,-apple-system,sans-serif}
+.sb{height:40px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;background:var(--w);flex-shrink:0}
+.sbt{font-size:13px;font-weight:500;color:var(--tx);font-variant-numeric:tabular-nums}
+.sbr{display:flex;gap:5px;align-items:center}
+.sbd{width:4px;height:4px;border-radius:50%;background:var(--tx3)}
+.screens{flex:1;overflow:hidden;position:relative}
+.scr{position:absolute;inset:0;overflow-y:auto;display:none;flex-direction:column;scrollbar-width:none}
+.scr::-webkit-scrollbar{display:none}
+.scr.on{display:flex}
+.bnav{height:68px;background:var(--w);border-top:0.5px solid var(--bord);display:flex;align-items:center;justify-content:space-around;padding:0 6px 8px;flex-shrink:0}
+.bi{display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 12px;border-radius:12px;cursor:pointer;transition:background .15s;border:none;background:none}
+.bi:hover{background:var(--cream)}
+.bl{font-size:9px;color:var(--tx3);font-family:system-ui,sans-serif;transition:color .15s}
+.bi.on .bl{color:var(--br);font-weight:500}
+.fab{width:46px;height:46px;border-radius:50%;background:var(--br);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;margin-bottom:6px}
+.fab:hover{background:var(--brd)}
+.serif{font-family:Georgia,'Book Antiqua',Palatino,serif}
+.lbl{font-size:10px;font-weight:500;color:var(--tx3);letter-spacing:.09em;text-transform:uppercase;margin:16px 0 8px}
+.rc{background:var(--cream);border-radius:15px;padding:13px 15px;margin-bottom:9px;border:0.5px solid rgba(160,120,85,.18);cursor:pointer;transition:background .15s}
+.rc:hover{background:var(--card)}
+.rct{font-size:13px;font-weight:500;color:var(--tx);margin-bottom:3px;font-family:Georgia,serif;line-height:1.4}
+.rcb{font-size:11px;color:var(--tx2);margin-bottom:9px;line-height:1.55}
+.rcf{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.pill{font-size:10px;padding:3px 8px;border-radius:20px;font-weight:500;line-height:1.4}
+.ptask{background:var(--grl);color:#3D6039}
+.phabit{background:#EDDDD4;color:#6B3D2A}
+.pthought{background:var(--aml);color:#6B5020}
+.pmem{background:#EBE6F5;color:#47407A}
+.pref{background:var(--cream);color:var(--tx2);border:0.5px solid var(--bord)}
+.ctx{display:flex;align-items:center;gap:4px;background:var(--w);border-radius:20px;padding:3px 8px;border:0.5px solid var(--bord);font-size:10px;color:var(--tx2)}
+.greet{padding:18px 20px 0;background:var(--w);flex-shrink:0}
+.gday{font-size:12px;color:var(--tx3)}
+.gname{font-size:26px;font-family:Georgia,serif;font-weight:normal;color:var(--tx);line-height:1.2}
+.gsub{font-size:12px;color:var(--tx2);margin-top:3px}
+.rdy{margin:12px 20px 0;background:var(--cream);border-radius:13px;padding:11px 14px;border:0.5px solid rgba(160,120,85,.18);flex-shrink:0}
+.rdyt{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.rdyl{font-size:11px;color:var(--tx2)}
+.rdyv{font-size:12px;font-weight:500;color:var(--br)}
+.rdytr{height:3px;background:var(--card);border-radius:2px}
+.rdyf{height:3px;background:var(--br);border-radius:2px;width:82%}
+.scroll-content{flex:1;padding:0 20px 20px;overflow-y:visible}
+.search{background:var(--cream);border-radius:11px;padding:9px 13px;display:flex;align-items:center;gap:9px;margin-bottom:12px;border:0.5px solid rgba(160,120,85,.15)}
+.si{flex:1;background:none;border:none;outline:none;font-size:13px;color:var(--tx);font-family:system-ui,sans-serif}
+.si::placeholder{color:var(--tx3)}
+.frow{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.frow::-webkit-scrollbar{display:none}
+.fp{flex-shrink:0;padding:5px 12px;border-radius:20px;font-size:11px;cursor:pointer;border:0.5px solid var(--bord);color:var(--tx2);background:var(--w);transition:all .15s}
+.fp.sel{background:var(--br);color:var(--w);border-color:var(--br)}
+.ni{display:flex;gap:11px;padding:12px 0;border-bottom:0.5px solid rgba(160,120,85,.1);cursor:pointer;align-items:flex-start}
+.ni:hover .nt{color:var(--br)}
+.ndot{width:7px;height:7px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.nt{font-size:13px;color:var(--tx);font-weight:500;margin-bottom:2px;line-height:1.3;transition:color .15s}
+.np{font-size:11px;color:var(--tx2);line-height:1.5}
+.nm{font-size:10px;color:var(--tx3);flex-shrink:0;margin-top:2px;text-align:right}
+.vscr{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:20px}
+.vwrap{display:flex;align-items:center;gap:4px;height:52px}
+.vb{width:4px;border-radius:2px;background:var(--brl)}
+@keyframes wv{0%,100%{height:5px;opacity:.5}50%{height:26px;opacity:1}}
+.rbtn{width:72px;height:72px;border-radius:50%;background:var(--br);border:none;cursor:pointer;display:flex;align-items:center;justify-content:justify-content;align-items:center;justify-content:center;transition:background .15s}
+.rbtn:hover{background:var(--brd)}
+.rbtn.rec{background:#B84B35}
+.vtxt{font-size:13px;color:var(--tx2);text-align:center;font-family:Georgia,serif}
+.valt{font-size:11px;color:var(--tx3);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.qhdr{font-size:10px;color:var(--tx3);letter-spacing:.09em;text-transform:uppercase;font-weight:500;padding:0 20px;margin-bottom:8px}
+.qi{display:flex;gap:10px;padding:10px 20px;align-items:center;border-top:0.5px solid rgba(160,120,85,.1);cursor:pointer}
+.qi:hover{background:var(--cream)}
+.qdot{width:6px;height:6px;border-radius:50%;background:var(--brl);flex-shrink:0}
+.qt{font-size:12px;color:var(--tx2)}
+.qtm{font-size:10px;color:var(--tx3)}
+.tlsec{font-size:10px;font-weight:500;color:var(--tx3);letter-spacing:.08em;text-transform:uppercase;padding:14px 20px 8px;display:flex;align-items:center;gap:8px}
+.tlsec::after{content:'';flex:1;height:0.5px;background:var(--bord)}
+.tli{display:flex;gap:12px;padding:0 20px 10px;align-items:flex-start}
+.tllt{display:flex;flex-direction:column;align-items:center;width:36px;flex-shrink:0}
+.tltm{font-size:9px;color:var(--tx3);text-align:center;line-height:1.3;margin-bottom:5px}
+.tldot{width:8px;height:8px;border-radius:50%;background:var(--brl);flex-shrink:0}
+.tldot.now{background:var(--br);width:10px;height:10px}
+.tlln{width:1px;flex:1;background:rgba(160,120,85,.2);min-height:20px;margin:4px auto 0}
+.tlc{flex:1;background:var(--cream);border-radius:13px;padding:11px 13px;border:0.5px solid rgba(160,120,85,.18);cursor:pointer;transition:background .15s}
+.tlc:hover{background:var(--card)}
+.tlc.now{border-color:rgba(160,120,85,.45);background:#EDE7DC}
+.tltt{font-size:13px;font-weight:500;color:var(--tx);margin-bottom:3px;font-family:Georgia,serif;line-height:1.3}
+.tlm{font-size:11px;color:var(--tx2)}
+.whdr{padding:16px 20px 12px;background:var(--w);border-bottom:0.5px solid var(--bord);flex-shrink:0}
+.wlbl{font-size:10px;color:var(--tx3);letter-spacing:.09em;text-transform:uppercase;font-weight:500;margin-bottom:4px}
+.wmock{margin:12px 20px 0;background:var(--cream);border-radius:18px;padding:15px;border:0.5px solid rgba(160,120,85,.22);flex-shrink:0}
+.wmlbl{font-size:9px;color:var(--tx3);letter-spacing:.09em;text-transform:uppercase;margin-bottom:7px}
+.wmn{font-size:15px;font-family:Georgia,serif;color:var(--tx);line-height:1.4;margin-bottom:6px}
+.wms{font-size:11px;color:var(--tx2);margin-bottom:10px}
+.wmbs{display:flex;gap:8px}
+.wmb{flex:1;padding:8px;border-radius:9px;border:0.5px solid var(--bord);background:var(--w);font-size:11px;color:var(--tx2);cursor:pointer;text-align:center;transition:background .15s}
+.wmb:hover{background:var(--w)}
+.wmb.p{background:var(--br);color:var(--w);border-color:var(--br);font-weight:500}
+.dethdr{padding:14px 20px 0;background:var(--w);flex-shrink:0}
+.back{display:flex;align-items:center;gap:6px;color:var(--br);font-size:12px;cursor:pointer;margin-bottom:12px;font-weight:500;background:none;border:none}
+.detttl{font-size:20px;font-family:Georgia,serif;font-weight:normal;color:var(--tx);line-height:1.3;margin-bottom:10px}
+.mrow{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:4px}
+.mc{background:var(--cream);border-radius:8px;padding:4px 9px;font-size:10px;color:var(--tx2);display:flex;align-items:center;gap:4px;border:0.5px solid var(--bord)}
+.detbody{font-size:13px;color:var(--tx);line-height:1.8;padding:16px 20px;border-top:0.5px solid var(--bord);margin-top:12px}
+.tagrow{display:flex;gap:7px;flex-wrap:wrap;padding:0 20px;margin-bottom:20px}
+.tag{font-size:10px;padding:4px 9px;border-radius:6px;background:var(--cream);color:var(--tx2);border:0.5px solid var(--bord)}
+.tag.on{background:var(--brl);color:#3C1F08;border-color:transparent}
+.reli{display:flex;gap:9px;padding:10px 13px;margin:0 20px 8px;background:var(--cream);border-radius:11px;border:0.5px solid var(--bord);cursor:pointer;align-items:center;transition:background .15s}
+.reli:hover{background:var(--card)}
+.redot{width:6px;height:6px;border-radius:50%;background:var(--am);flex-shrink:0}
+.retxt{font-size:12px;color:var(--tx2)}
+</style>
+
+<div class="wrap">
+<div class="phone">
+
+<div class="sb">
+  <span class="sbt">9:41</span>
+  <div class="sbr">
+    <div class="sbd"></div>
+    <div class="sbd"></div>
+    <div class="sbd"></div>
+    <svg width="15" height="10" viewBox="0 0 15 10" fill="none">
+      <rect x="0" y="4" width="3" height="6" rx="1" fill="#B5A596"/>
+      <rect x="4" y="2.5" width="3" height="7.5" rx="1" fill="#B5A596"/>
+      <rect x="8" y="1" width="3" height="9" rx="1" fill="#A07855"/>
+      <rect x="12" y="0" width="3" height="10" rx="1" fill="#A07855"/>
+    </svg>
+    <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+      <rect x="1" y="1" width="10" height="7" rx="1.5" stroke="#B5A596" stroke-width="1"/>
+      <rect x="11" y="3.5" width="2" height="3" rx="0.5" fill="#B5A596"/>
+      <rect x="2" y="2" width="7" height="5" rx="0.5" fill="#A07855"/>
+    </svg>
+  </div>
+</div>
+
+<div class="screens">
+
+<div class="scr on" id="shome">
+  <div class="greet">
+    <div class="gday">Friday, 18 April</div>
+    <div class="gname">Good morning,<br>Naman.</div>
+    <div class="gsub">14 things remembered for today</div>
+  </div>
+  <div class="rdy">
+    <div class="rdyt"><span class="rdyl">Today's recall readiness</span><span class="rdyv">82%</span></div>
+    <div class="rdytr"><div class="rdyf"></div></div>
+  </div>
+  <div class="scroll-content">
+    <div class="lbl">Today's recalls</div>
+    <div class="rc" onclick="showDetail()">
+      <div class="rct">Priya — job referral follow-up</div>
+      <div class="rcb">You said: "remind me to ask Priya about the referral before the 2pm meeting."</div>
+      <div class="rcf">
+        <span class="pill ptask">task</span>
+        <span class="ctx"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><circle cx="4.5" cy="4.5" r="3.5" stroke="#7A6558" stroke-width="1"/><path d="M4.5 2.5v2.3l1.5 1" stroke="#7A6558" stroke-width="1" stroke-linecap="round"/></svg>in 47 min</span>
+        <span class="ctx"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M4.5 1C3.1 1 2 2.1 2 3.5c0 2 2.5 4.5 2.5 4.5s2.5-2.5 2.5-4.5C7 2.1 5.9 1 4.5 1z" stroke="#7A6558" stroke-width="1"/></svg>Work</span>
+      </div>
+    </div>
+    <div class="rc" onclick="showDetail()">
+      <div class="rct">Blue design — final decision logged</div>
+      <div class="rcb">Decision made in Tuesday's sprint: "We're going with the blue layout for onboarding."</div>
+      <div class="rcf">
+        <span class="pill pthought">thought</span>
+        <span class="ctx"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><circle cx="4.5" cy="4.5" r="3.5" stroke="#7A6558" stroke-width="1"/><path d="M4.5 2.5v2.3l1.5 1" stroke="#7A6558" stroke-width="1" stroke-linecap="round"/></svg>2 days ago</span>
+      </div>
+    </div>
+    <div class="rc" onclick="showDetail()">
+      <div class="rct">Gym at 5pm — daily habit</div>
+      <div class="rcb">Habit streak: 12 days. You're 1.2km from the gym right now.</div>
+      <div class="rcf">
+        <span class="pill phabit">habit</span>
+        <span class="ctx"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M4.5 1C3.1 1 2 2.1 2 3.5c0 2 2.5 4.5 2.5 4.5s2.5-2.5 2.5-4.5C7 2.1 5.9 1 4.5 1z" stroke="#7A9176" stroke-width="1"/></svg>1.2km away</span>
+        <span class="ctx"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><circle cx="4.5" cy="4.5" r="3.5" stroke="#7A6558" stroke-width="1"/><path d="M4.5 2.5v2.3l1.5 1" stroke="#7A6558" stroke-width="1" stroke-linecap="round"/></svg>in 3h</span>
+      </div>
+    </div>
+    <div class="lbl">Pinned</div>
+    <div class="rc" onclick="showDetail()">
+      <div class="rct">Gate code for Priya's office block</div>
+      <div class="rcb">Reference saved 3 days ago — surfaces near Priya calendar events.</div>
+      <div class="rcf">
+        <span class="pill pref">reference</span>
+        <span class="ctx"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><rect x="1.5" y="1" width="6" height="7" rx="1" stroke="#7A6558" stroke-width="1"/><path d="M3 3.5h3M3 5.5h2" stroke="#7A6558" stroke-width=".8" stroke-linecap="round"/></svg>encrypted</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="scr" id="snotes">
+  <div style="padding:18px 20px 12px;background:var(--w);flex-shrink:0">
+    <div style="font-size:22px;font-family:Georgia,serif;color:var(--tx)">Your notes</div>
+    <div style="font-size:12px;color:var(--tx3);margin-top:2px">48 notes · 7 active today</div>
+  </div>
+  <div class="scroll-content">
+    <div class="search" style="margin-top:4px">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="#B5A596" stroke-width="1.2"/><path d="M9.5 9.5l2.5 2.5" stroke="#B5A596" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <input class="si" placeholder="Search your memory...">
+    </div>
+    <div class="frow">
+      <div class="fp sel">All</div>
+      <div class="fp">Tasks</div>
+      <div class="fp">Thoughts</div>
+      <div class="fp">Habits</div>
+      <div class="fp">Memories</div>
+      <div class="fp">Ideas</div>
+    </div>
+    <div class="ni" onclick="showDetail()">
+      <div class="ndot" style="background:var(--gr)"></div>
+      <div style="flex:1">
+        <div class="nt">Priya — job referral, 2pm today</div>
+        <div class="np">Ask before the meeting about the PM role at Zomato</div>
+      </div>
+      <div class="nm">2h ago<br><span class="pill ptask" style="font-size:9px">task</span></div>
+    </div>
+    <div class="ni" onclick="showDetail()">
+      <div class="ndot" style="background:var(--am)"></div>
+      <div style="flex:1">
+        <div class="nt">Blue design — sprint decision</div>
+        <div class="np">We're going with the blue layout. Final call Tuesday.</div>
+      </div>
+      <div class="nm">2d ago<br><span class="pill pthought" style="font-size:9px">thought</span></div>
+    </div>
+    <div class="ni" onclick="showDetail()">
+      <div class="ndot" style="background:var(--brl)"></div>
+      <div style="flex:1">
+        <div class="nt">Gym 5pm — daily routine</div>
+        <div class="np">Go every weekday, 5pm. Streak: 12 days.</div>
+      </div>
+      <div class="nm">Active<br><span class="pill phabit" style="font-size:9px">habit</span></div>
+    </div>
+    <div class="ni" onclick="showDetail()">
+      <div class="ndot" style="background:#9B8EC4"></div>
+      <div style="flex:1">
+        <div class="nt">Airport terminal — food hall idea</div>
+        <div class="np">The layout gave me an idea for space-based social memory triggers</div>
+      </div>
+      <div class="nm">3d ago<br><span class="pill pmem" style="font-size:9px">memory</span></div>
+    </div>
+    <div class="ni" onclick="showDetail()">
+      <div class="ndot" style="background:var(--am)"></div>
+      <div style="flex:1">
+        <div class="nt">Social share — group memory feature</div>
+        <div class="np">Invite others to a folder, relive trips/events together</div>
+      </div>
+      <div class="nm">1w ago<br><span class="pill pthought" style="font-size:9px">idea</span></div>
+    </div>
+    <div class="ni" onclick="showDetail()">
+      <div class="ndot" style="background:var(--br)"></div>
+      <div style="flex:1">
+        <div class="nt">Priya office — gate code saved</div>
+        <div class="np">Encrypted reference. Surfaces near calendar events with Priya.</div>
+      </div>
+      <div class="nm">4d ago<br><span class="pill pref" style="font-size:9px">ref</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="scr" id="scapture">
+  <div style="padding:16px 20px 0;background:var(--w);flex-shrink:0;display:flex;justify-content:space-between;align-items:center">
+    <div style="font-size:14px;color:var(--tx3);font-family:Georgia,serif">New memo</div>
+    <button onclick="showScreen('shome')" style="background:none;border:none;cursor:pointer;color:var(--tx3);font-size:13px;padding:4px 10px;border-radius:8px;border:0.5px solid var(--bord)">done</button>
+  </div>
+  <div class="vscr" id="vscr">
+    <div style="text-align:center">
+      <div style="font-size:22px;font-family:Georgia,serif;color:var(--tx);margin-bottom:4px">Speak freely.</div>
+      <div style="font-size:12px;color:var(--tx3)">Your thought will be caught.</div>
+    </div>
+    <div class="vwrap" id="vwrap">
+      <div class="vb" style="height:8px;animation:wv 1.2s ease-in-out infinite;animation-delay:0s"></div>
+      <div class="vb" style="height:6px;animation:wv 1.2s ease-in-out infinite;animation-delay:.1s"></div>
+      <div class="vb" style="height:12px;animation:wv 1.2s ease-in-out infinite;animation-delay:.2s"></div>
+      <div class="vb" style="height:6px;animation:wv 1.2s ease-in-out infinite;animation-delay:.3s"></div>
+      <div class="vb" style="height:20px;animation:wv 1.2s ease-in-out infinite;animation-delay:.4s"></div>
+      <div class="vb" style="height:10px;animation:wv 1.2s ease-in-out infinite;animation-delay:.5s"></div>
+      <div class="vb" style="height:28px;animation:wv 1.2s ease-in-out infinite;animation-delay:.6s"></div>
+      <div class="vb" style="height:14px;animation:wv 1.2s ease-in-out infinite;animation-delay:.7s"></div>
+      <div class="vb" style="height:20px;animation:wv 1.2s ease-in-out infinite;animation-delay:.8s"></div>
+      <div class="vb" style="height:8px;animation:wv 1.2s ease-in-out infinite;animation-delay:.9s"></div>
+      <div class="vb" style="height:14px;animation:wv 1.2s ease-in-out infinite;animation-delay:1s"></div>
+      <div class="vb" style="height:6px;animation:wv 1.2s ease-in-out infinite;animation-delay:1.1s"></div>
+    </div>
+    <button class="rbtn" id="rbtn" onclick="toggleRecord()">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="10" y="4" width="8" height="14" rx="4" fill="white"/><path d="M6 14c0 4.4 3.6 8 8 8s8-3.6 8-8" stroke="white" stroke-width="1.8" stroke-linecap="round"/><line x1="14" y1="22" x2="14" y2="26" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <div id="vtxtlbl" class="vtxt">Tap to speak</div>
+    <span class="valt" onclick="showTextInput()">type instead</span>
+  </div>
+  <div id="textInputArea" style="display:none;padding:0 20px 20px;flex:1;flex-direction:column;gap:12px">
+    <textarea id="memoText" placeholder="What's on your mind?" style="flex:1;background:var(--cream);border:0.5px solid rgba(160,120,85,.25);border-radius:14px;padding:14px;font-size:14px;color:var(--tx);font-family:Georgia,serif;resize:none;outline:none;line-height:1.7;min-height:140px"></textarea>
+    <button onclick="saveMemo()" style="background:var(--br);color:white;border:none;border-radius:12px;padding:13px;font-size:13px;cursor:pointer;font-family:system-ui,sans-serif;font-weight:500">Save memo</button>
+  </div>
+  <div style="border-top:0.5px solid rgba(160,120,85,.12);padding-top:12px;padding-bottom:12px;flex-shrink:0">
+    <div class="qhdr">Recent captures</div>
+    <div class="qi">
+      <div class="qdot"></div>
+      <div style="flex:1"><div class="qt">Remind me to ask Priya about the PM role</div><div style="font-size:10px;color:var(--tx3);margin-top:2px">2h ago · task</div></div>
+    </div>
+    <div class="qi">
+      <div class="qdot" style="background:var(--am)"></div>
+      <div style="flex:1"><div class="qt">Going with blue design layout for onboarding</div><div style="font-size:10px;color:var(--tx3);margin-top:2px">2d ago · thought</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="scr" id=stoday>
+  <div class="whdr">
+    <div class="wlbl">Recall window</div>
+    <div style="font-size:20px;font-family:Georgia,serif;color:var(--tx)">Today's playlist</div>
+    <div style="font-size:12px;color:var(--tx3);margin-top:2px">7 contextual prompts queued</div>
+  </div>
+  <div class="wmock">
+    <div class="wmlbl">Home screen widget</div>
+    <div class="wmn">Priya meeting in 47 min — job referral</div>
+    <div class="wms">Work context · calendar signal</div>
+    <div class="wmbs">
+      <div class="wmb">snooze 15m</div>
+      <div class="wmb p">view note</div>
+    </div>
+  </div>
+  <div style="flex:1;overflow-y:visible">
+    <div class="tlsec">Morning</div>
+    <div class="tli">
+      <div class="tllt">
+        <div class="tltm">8:30<br>AM</div>
+        <div class="tldot"></div>
+        <div class="tlln"></div>
+      </div>
+      <div class="tlc">
+        <div class="tltt">Gym habit — morning check-in</div>
+        <div class="tlm">Habit active · stationary context</div>
+      </div>
+    </div>
+    <div class="tli">
+      <div class="tllt">
+        <div class="tltm">10:00<br>AM</div>
+        <div class="tldot"></div>
+        <div class="tlln"></div>
+      </div>
+      <div class="tlc">
+        <div class="tltt">Blue design decision reference</div>
+        <div class="tlm">Surfaced near your calendar: "Product sync"</div>
+      </div>
+    </div>
+    <div class="tlsec">Now</div>
+    <div class="tli">
+      <div class="tllt">
+        <div class="tltm">1:13<br>PM</div>
+        <div class="tldot now"></div>
+        <div class="tlln"></div>
+      </div>
+      <div class="tlc now" onclick="showDetail()">
+        <div class="tltt">Priya — job referral today 2pm</div>
+        <div class="tlm">Meeting in 47 min · high relevance</div>
+      </div>
+    </div>
+    <div class="tlsec">Afternoon</div>
+    <div class="tli">
+      <div class="tllt">
+        <div class="tltm">2:15<br>PM</div>
+        <div class="tldot"></div>
+        <div class="tlln"></div>
+      </div>
+      <div class="tlc">
+        <div class="tltt">Gate code — Priya's office block</div>
+        <div class="tlm">Encrypted reference · location unlock</div>
+      </div>
+    </div>
+    <div class="tli">
+      <div class="tllt">
+        <div class="tltm">5:00<br>PM</div>
+        <div class="tldot"></div>
+        <div class="tlln"></div>
+      </div>
+      <div class="tlc">
+        <div class="tltt">Gym at 5pm — daily habit</div>
+        <div class="tlm">Will suppress if at gym already</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="scr" id="sdetail">
+  <div class="dethdr">
+    <button class="back" onclick="showScreen('shome')">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="#A07855" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      back
+    </button>
+    <div class="detttl">Priya — job referral follow-up today 2pm</div>
+    <div class="mrow">
+      <div class="mc"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><circle cx="4.5" cy="4.5" r="3.5" stroke="#7A6558" stroke-width="1"/><path d="M4.5 2.5v2.3l1.5 1" stroke="#7A6558" stroke-width="1" stroke-linecap="round"/></svg>Today, 2:00 PM</div>
+      <div class="mc"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M4.5 1C3.1 1 2 2.1 2 3.5c0 2 2.5 4.5 2.5 4.5s2.5-2.5 2.5-4.5C7 2.1 5.9 1 4.5 1z" stroke="#7A6558" stroke-width="1"/></svg>Work</div>
+      <div class="mc">neutral mood</div>
+    </div>
+  </div>
+  <div class="detbody">
+    "Remind me to ask Priya about the PM role at Zomato before the 2pm meeting today — she mentioned she can refer me and I don't want to forget."
+  </div>
+  <div class="tagrow">
+    <span class="tag on">is_actionable</span>
+    <span class="tag on">task</span>
+    <span class="tag">is_habit: false</span>
+    <span class="tag on">entity: Priya</span>
+    <span class="tag">domain: professional</span>
+    <span class="tag">sensitivity: low</span>
+  </div>
+  <div class="lbl" style="padding:0 20px">Related notes</div>
+  <div class="reli">
+    <div class="redot"></div>
+    <div class="retxt">Gate code — Priya's office building</div>
+  </div>
+  <div class="reli">
+    <div class="redot" style="background:var(--gr)"></div>
+    <div class="retxt">Blue design decision · same sprint week</div>
+  </div>
+  <div style="padding:16px 20px 0;display:flex;gap:8px;flex-shrink:0">
+    <button style="flex:1;padding:11px;border-radius:12px;border:0.5px solid var(--bord);background:var(--cream);font-size:12px;color:var(--tx2);cursor:pointer">archive</button>
+    <button style="flex:1;padding:11px;border-radius:12px;border:0.5px solid var(--bord);background:var(--cream);font-size:12px;color:var(--tx2);cursor:pointer">snooze</button>
+    <button style="flex:2;padding:11px;border-radius:12px;border:none;background:var(--br);font-size:12px;color:white;cursor:pointer;font-weight:500">mark resolved</button>
+  </div>
+</div>
+
+</div>
+
+<nav class="bnav">
+  <button class="bi on" id="bn-home" onclick="showScreen('shome')">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 9l7-6 7 6v8a1 1 0 01-1 1H4a1 1 0 01-1-1V9z" stroke="#A07855" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 18v-6h6v6" stroke="#A07855" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="bl">home</span>
+  </button>
+  <button class="bi" id="bn-notes" onclick="showScreen('snotes')">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="4" y="3" width="12" height="14" rx="2" stroke="#B5A596" stroke-width="1.3"/><path d="M7 7h6M7 10h6M7 13h4" stroke="#B5A596" stroke-width="1.2" stroke-linecap="round"/></svg>
+    <span class="bl">notes</span>
+  </button>
+  <button class="fab" onclick="showScreen('scapture')">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="8" y="3" width="6" height="10" rx="3" fill="white"/><path d="M4.5 11c0 3.6 2.9 6.5 6.5 6.5s6.5-2.9 6.5-6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="11" y1="17.5" x2="11" y2="20.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+  <button class="bi" id="bn-today" onclick="showScreen('stoday')">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="13" rx="2" stroke="#B5A596" stroke-width="1.3"/><path d="M7 2v4M13 2v4M3 8h14" stroke="#B5A596" stroke-width="1.3" stroke-linecap="round"/><circle cx="10" cy="13" r="2" stroke="#B5A596" stroke-width="1.2"/></svg>
+    <span class="bl">today</span>
+  </button>
+  <button class="bi" id="bn-detail" onclick="showScreen('sdetail')">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#B5A596" stroke-width="1.3"/><circle cx="10" cy="8" r="2.5" stroke="#B5A596" stroke-width="1.2"/><path d="M5.5 16c.5-2 2.5-3.5 4.5-3.5s4 1.5 4.5 3.5" stroke="#B5A596" stroke-width="1.2" stroke-linecap="round"/></svg>
+    <span class="bl">profile</span>
+  </button>
+</nav>
+
+</div>
+</div>
+
+<script>
+function showScreen(id){
+  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.bi').forEach(b=>b.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  const map={shome:'bn-home',snotes:'bn-notes',stoday:'bn-today',sdetail:'bn-detail'};
+  if(map[id]){document.getElementById(map[id]).classList.add('on')}
+}
+
+function showDetail(){showScreen('sdetail')}
+
+let isRec=false;
+function toggleRecord(){
+  const btn=document.getElementById('rbtn');
+  const lbl=document.getElementById('vtxtlbl');
+  isRec=!isRec;
+  btn.classList.toggle('rec',isRec);
+  lbl.textContent=isRec?'Listening...':'Tap to speak';
+  if(isRec){
+    setTimeout(()=>{
+      isRec=false;btn.classList.remove('rec');lbl.textContent='Tap to speak';
+    },3000);
+  }
+}
+
+function showTextInput(){
+  document.getElementById('vscr').style.display='none';
+  const t=document.getElementById('textInputArea');
+  t.style.display='flex';
+}
+
+function saveMemo(){
+  document.getElementById('textInputArea').style.display='none';
+  document.getElementById('vscr').style.display='flex';
+  document.getElementById('memoText').value='';
+  showScreen('shome');
+}
+
+document.querySelectorAll('.fp').forEach(p=>{
+  p.addEventListener('click',function(){
+    document.querySelectorAll('.fp').forEach(x=>x.classList.remove('sel'));
+    this.classList.add('sel');
+  });
+});
+</script>
